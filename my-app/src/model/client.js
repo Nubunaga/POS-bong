@@ -25,13 +25,14 @@ const onConnect = () => {
     console.log("Subsribe to: " + topic);
 
     // Subscribe to the requested topic
-    this.client.subscribe(this.topic);
+    client.subscribe(topic);
 
 }
 
 // Called when the client loses its connection
 const onConnectionLost = (responseObject) => {
     console.log("connection loss")
+    console.log(responseObject)
     if (responseObject.errorCode !== 0) {
         console.log("error " + this.responseObject)
     }
