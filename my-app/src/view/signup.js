@@ -1,3 +1,20 @@
+/**
+ * This class handles the inital signup for the website to connect to
+ * the borker MQTT. 
+ * It takes the <code> this.state </code> and uppdates the <em> host </em>
+ * and <em> port </em> by <code> this.setState </code> that derives from
+ * {@link Component} interface. 
+ * The 2 states are uppdate by an <code> onChange </code> handler that uppdates
+ * the value. 
+ * Then by clicking the connect button, an <code> onClick </code> event handler
+ * sees this event and takes the 2 values and sends them to the client in 
+ * {@link ./model/client.js} to connect to the broker.
+ * @author Netanel Avraham EKlind
+ * @version 2020-03-13 -> implementing the signup code and connection it to the client
+ */
+
+
+
 import React, { Component } from 'react';
 import Paho from '../model/client.js';
 
@@ -54,6 +71,7 @@ class Signup extends Component {
      */
     connect = () => {
         Paho(this.state.host, this.state.port);
+        window.location.pathname = "/Bong-display"
     }
 }
 
