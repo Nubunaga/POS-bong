@@ -53,7 +53,7 @@ class Signup extends Component {
      * This will call the Paho Mqtt server with the host and port nr. 
      */
     connect = () => {
-        Paho.startConnect(this.state.host, this.state.port);
+        Paho(this.state.host, this.state.port);
     }
 }
 

@@ -1,67 +1,56 @@
 import Paho from 'paho-mqtt'
-class Connect {
 
-    constructor() {
-        this.client = null;
-        this.topic = 'kistan/kvitto/report';
-    }
-    startConnect(host, port) {
-        let clientID = "clientID-" + parseInt(Math.random() * 100);
+var client;
 
-        console.log("Connecting to: " + host + " on Port: " + port + " Client id: " + this.clientID)
-        // Initialize new Paho client connection
-        this.client = new Paho.Client(host, Number(port), clientID);
+const startConnect = (host, port) => {
+    let clientID = "clientID-" + parseInt(Math.random() * 100);
+    console.log(clientID)
+    console.log("Connecting to: " + host + " on Port: " + port + " Client id: " + clientID)
+    // Initialize new Paho client connection
+    client = new Paho.Client(host, Number(port), clientID);
 
-        // Set callback handlers
-        this.client.onConnectionLost = this.onConnectionLost;
-        this.client.onMessageArrived = onMessageArrived;
+    // Set callback handlers
+    client.onConnectionLost = onConnectionLost;
+    client.onMessageArrived = onMessageArrived;
 
-        // Connect the client, if successful, call onConnect function
-        this.client.connect({
-            onSuccess: this.onConnect
-        });
-    }
+    // Connect the client, if successful, call onConnect function
+    client.connect({
+        onSuccess: onConnect
+    });
+}
 
-    // Called when the client connects
-    onConnect = () => {
-        console.log("Subsribe to: " + this.topic);
-        console.log(this.client.isConnected())
+// Called when the client connects
+const onConnect = () => {
+    let topic = 'kistan/kvitto/report';
+    console.log("Subsribe to: " + topic);
 
-        // Subscribe to the requested topic
-        this.client.subscribe(this.topic);
-    }
+    // Subscribe to the requested topic
+    this.client.subscribe(this.topic);
 
-    // Called when the client loses its connection
-    onConnectionLost = (responseObject) => {
-        console.log("connection loss")
-        if (responseObject.errorCode !== 0) {
-            console.log("error " + this.responseObject)
-        }
-    }
+}
 
-    // Called when a message arrives
-    onMessageArrived(message) {
-        console.log("onMessageArrived: " + message.payloadString);
-        console.log("Topic: " + message.destinationName + " | " + message.payloadString)
-    }
-
-    // Called when the disconnection button is pressed
-    startDisconnect() {
-        this.client.disconnect();
-        console.log("disconnect")
-    }
-
-    // Parses the JSON file into an object to be used
-    parseJSON(message) {
-        return JSON.parse(message);
+// Called when the client loses its connection
+const onConnectionLost = (responseObject) => {
+    console.log("connection loss")
+    if (responseObject.errorCode !== 0) {
+        console.log("error " + this.responseObject)
     }
 }
 
-function onMessageArrived(message) {
+// Called when a message arrives
+const onMessageArrived = (message) => {
     console.log("onMessageArrived: " + message.payloadString);
     console.log("Topic: " + message.destinationName + " | " + message.payloadString)
 }
 
-const client = new Connect();
+// Called when the disconnection button is pressed
+const startDisconnect = () => {
+    client.disconnect();
+    console.log("disconnect")
+}
 
-export default client;
+// Parses the JSON file into an object to be used
+const parseJSON = (message) => {
+    return JSON.parse(message);
+}
+export default startConnect;
