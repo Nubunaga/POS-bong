@@ -1,4 +1,5 @@
 import Paho from 'paho-mqtt'
+import Observer from './Observable';
 
 var client;
 
@@ -39,9 +40,11 @@ const onConnectionLost = (responseObject) => {
 }
 
 // Called when a message arrives
+// Notify observer to this change
 const onMessageArrived = (message) => {
     console.log("onMessageArrived: " + message.payloadString);
     console.log("Topic: " + message.destinationName + " | " + message.payloadString)
+    Observer.notifyObserver(message.payload);
 }
 
 // Called when the disconnection button is pressed

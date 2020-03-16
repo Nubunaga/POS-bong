@@ -14,11 +14,34 @@ import { Component } from "react";
 
 
 class Display extends Component {
+    constructor(porp) {
+        super(porp)
+        this.state = {
+            food: []
+        }
+    }
 
+    componentDidMount() {
+        console.log(this.props.model);
+        this.props.model.addObserver(this);
+    }
+
+
+    componentWillUnmount() {
+        this.props.model.removeObserver(this);
+    }
     render() {
         return (
             <h1> this is the display screen! Not yet implemented!</h1>
         );
+    }
+
+
+    update(payload) {
+        this.setState({
+            ...this.state,
+            food: payload
+        })
     }
 }
 
